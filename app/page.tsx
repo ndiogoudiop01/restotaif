@@ -3,6 +3,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { ShoppingCart, User, Phone, Search, Star, Plus, Minus, X, MapPin, Clock, CreditCard } from 'lucide-react';
+import Footer from '@/components/layout/Footer';
 
 // Types
 interface MenuItem {
@@ -1663,7 +1664,9 @@ export default function FoodDeliveryApp() {
             </div>
           </div>
         </div>
+           <Footer />
       </div>
+      
     );
   };
 
