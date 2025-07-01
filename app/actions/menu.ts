@@ -2,7 +2,7 @@
 
 import { db } from '@/lib/db';
 import { menuCategories, menuItems, menuVariants, menuCustomizations } from '@/lib/db/schema';
-import { eq, and, ilike, gte, lte, asc } from 'drizzle-orm';
+import { eq, and, ilike, asc } from 'drizzle-orm';
 import { ApiResponse, MenuItem, MenuCategory } from '@/lib/types';
 
 export async function getCategories(): Promise<ApiResponse<MenuCategory[]>> {

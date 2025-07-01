@@ -12,7 +12,13 @@ export async function getLoyaltyRewards(): Promise<ApiResponse<LoyaltyReward[]>>
       .from(loyaltyRewards)
       .where(eq(loyaltyRewards.isActive, true));
 
-    return { success: true, data: rewards };
+    // Cast type to the correct union type
+    const mappedRewards: LoyaltyReward[] = rewards.map(r => ({
+      ...r,
+      type: r.type as LoyaltyReward['type']
+    }));
+
+    return { success: true, data: mappedRewards };
   } catch (error) {
     console.error('Erreur lors de la récupération des récompenses:', error);
     return { success: false, error: "Erreur lors de la récupération des récompenses" };
