@@ -70,7 +70,7 @@ export interface Order {
   total: number;
   deliveryAddress?: string;
   customerNotes?: string;
-  estimatedDeliveryTime?: Date;
+  //estimatedDeliveryTime?: Date;
   items: OrderItem[];
   createdAt: Date;
 }

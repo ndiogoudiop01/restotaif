@@ -92,49 +92,65 @@ export async function createOrder(
   }
 }
 
-export async function getOrdersByUser(userId: string): Promise<ApiResponse<Order[]>> {
-  try {
-    const userOrders = await db.query.orders.findMany({
-      where: eq(orders.userId, userId),
-      with: {
-        items: {
-          with: {
-            menuItem: {
-              with: {
-                category: true
-              }
-            },
-            variant: true
-          }
-        }
-      },
-      orderBy: (orders, { desc }) => [desc(orders.createdAt)]
-    });
+// export async function getOrdersByUser(userId: string): Promise<ApiResponse<Order[]>> {
+//   try {
+//     const userOrders = await db.query.orders.findMany({
+//       where: eq(orders.userId, userId),
+//       with: {
+//         items: {
+//           with: {
+//             menuItem: {
+//               with: {
+//                 category: true
+//               }
+//             },
+//             variant: true
+//           }
+//         }
+//       },
+//       orderBy: (orders, { desc }) => [desc(orders.createdAt)]
+//     });
 
-    const formattedOrders = userOrders.map(order => ({
-      ...order,
-      subtotal: Number(order.subtotal),
-      deliveryFee: Number(order.deliveryFee),
-      total: Number(order.total),
-      items: order.items.map(item => ({
-        ...item,
-        unitPrice: Number(item.unitPrice),
-        totalPrice: Number(item.totalPrice),
-        menuItem: {
-          ...item.menuItem,
-          basePrice: Number(item.menuItem.basePrice),
-          rating: Number(item.menuItem.rating)
-        },
-        variant: {
-          ...item.variant,
-          price: Number(item.variant.price)
-        }
-      }))
-    }));
+//     const formattedOrders: Order[] = userOrders.map(order => ({
+//       ...order,
+//       subtotal: Number(order.subtotal),
+//       deliveryFee: Number(order.deliveryFee),
+//       total: Number(order.total),
+//       // Convertir null en undefined pour correspondre au type Order
+//       deliveryAddress: order.deliveryAddress ?? undefined,
+//       customerNotes: order.customerNotes ?? undefined,
+//       // Convertir Date en string ISO ou undefined
+//       estimatedDeliveryTime: order.estimatedDeliveryTime?.toISOString() ?? undefined,
+//       // Convertir null en undefined pour paymentTransactionId
+//       paymentTransactionId: order.paymentTransactionId ?? undefined,
+//       items: order.items.map(item => ({
+//         id: item.id,
+//         orderId: item.orderId,
+//         menuItemId: item.menuItemId,
+//         variantId: item.variantId,
+//         quantity: item.quantity,
+//         unitPrice: Number(item.unitPrice),
+//         totalPrice: Number(item.totalPrice),
+//         // Convertir null en undefined pour customizations
+//         customizations: item.customizations ?? undefined,
+//         createdAt: item.createdAt,
+//         //updatedAt: item.updatedAt,
+//         menuItem: {
+//           ...item.menuItem,
+//           basePrice: 21,//Number(item.menuItem.basePrice),
+//           rating: Number(item.menuItem.rating)
+//         },
+//         variant: {
+//           ...item.variant,
+//           price: Number(item.variant.price)
+//         }
+//       }))
+//     }));
 
-    return { success: true, data: formattedOrders };
-  } catch (error) {
-    console.error('Erreur lors de la récupération des commandes:', error);
-    return { success: false, error: "Erreur lors de la récupération des commandes" };
-  }
-}
+//     return { success: true, data: formattedOrders };
+//   } catch (error) {
+//     console.error('Erreur lors de la récupération des commandes:', error);
+//     return { success: false, error: "Erreur lors de la récupération des commandes" };
+//   }
+
+// }

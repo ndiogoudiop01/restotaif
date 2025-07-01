@@ -3,7 +3,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { ShoppingCart, User, Phone, Search, Star, Plus, Minus, X, MapPin, Clock, CreditCard } from 'lucide-react';
-import Footer from '@/components/layout/Footer';
+//import Footer from '@/components/layout/Footer';
 
 // Types
 interface MenuItem {
@@ -1013,7 +1013,7 @@ export default function FoodDeliveryApp() {
     const progressToNext = nextTier ? 
       ((user?.points || 0) - currentTier.min) / (nextTier.min - currentTier.min) * 100 : 100;
 
-    const redeemReward = (reward) => {
+    const redeemReward = (reward: any) => {
       if (user && user.points >= reward.points) {
         setUser({ ...user, points: user.points - reward.points });
         alert(`Récompense "${reward.name}" échangée avec succès !`);
